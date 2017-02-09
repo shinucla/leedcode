@@ -5,7 +5,6 @@ import java.util.*;
 import java.util.stream.*;
 
 public class Test {
-
 	public static void main(String[] args) throws Exception {
 		String dir = "root\n\t12\n\t\t2\n\t\t\t3\n\t4\n\t\t5\n\t\t\t6\n\t\t\t\t\t7\n\t1234567";
 		
