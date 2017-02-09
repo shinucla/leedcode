@@ -1,0 +1,57 @@
+<project name="foo" default="dist" basedir=".">
+
+  <property name="src.dir" location="src"/>
+  <property name="build.dir" location="build"/>
+  <property name="build.classes.dir" location="${build.dir}/classes"/>
+
+  <path id="classpath">
+    <!--pathelement location="/opt/libraries/json/json.jar"/-->	
+
+    <pathelement location="${build.classes.dir}"/>	
+  </path>
+
+  <target name="clean">
+    <delete dir="${build.dir}"/>
+  </target>
+
+  <target name="compile" depends="clean">
+    <mkdir dir="${build.dir}" />
+    <mkdir dir="${build.classes.dir}" />
+    <javac srcdir="${src.dir}"
+           destdir="${build.classes.dir}"
+           classpathref="classpath"
+	   includeantruntime="false"
+           debug="on"
+           deprecation="on"
+           optimize="off">
+      <compilerarg value="-version"/>
+      <compilerarg value="-Xmaxerrs"/>
+      <compilerarg value="1500"/>
+      <compilerarg value="-Xmaxwarns"/>
+      <compilerarg value="3500"/>
+    </javac>
+  </target>
+
+  <target name="jar" depends="compile">
+    <mkdir dir="${build.dir}/jar"/>
+    <jar destfile="${build.dir}/jar/${ant.project.name}.jar" basedir="${build.dir}/classes">
+      <manifest>
+	<attribute name="Main-Class" value="test.Test"/>
+      </manifest>
+      <!--zipgroupfileset dir="/opt/libraries/json" includes="**/*.jar" /-->
+    </jar>
+  </target>
+
+  <target name="run.SpecifiedMain">
+    <java classpathref="classpath"
+	  classname="${target.main}"
+	  failonerror="true"
+	  fork="true">
+      <arg line="${args}"/>
+      <classpath>
+	<path refid="classpath" /> 
+	<path location="${build.dir}/jar/${ant.project.name}.jar" /> 
+      </classpath>
+    </java>
+  </target>
+</project>
