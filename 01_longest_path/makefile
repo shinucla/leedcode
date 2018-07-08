@@ -1,6 +1,6 @@
 
 BUILDFILE=build.xml
-ANT=/opt/libraries/apache/bin/ant
+ANT=~/.opt/lib/apache-ant-1.10.4/bin/ant
 
 default :: compile
 
